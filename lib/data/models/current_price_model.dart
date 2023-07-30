@@ -48,14 +48,13 @@ class CurrentPriceModel extends Equatable {
       bpi: bpi?.toEntity());
 
   @override
-  // TODO: implement props
   List<Object?> get props => [time, disclaimer, chartName, bpi];
 }
 
-class Bpi {
-  final Eur? usd;
-  final Eur? gbp;
-  final Eur? eur;
+class Bpi extends Equatable {
+  final Currency? usd;
+  final Currency? gbp;
+  final Currency? eur;
 
   Bpi({
     this.usd,
@@ -64,9 +63,9 @@ class Bpi {
   });
 
   factory Bpi.fromJson(Map<String, dynamic> json) => Bpi(
-        usd: json["USD"] == null ? null : Eur.fromJson(json["USD"]),
-        gbp: json["GBP"] == null ? null : Eur.fromJson(json["GBP"]),
-        eur: json["EUR"] == null ? null : Eur.fromJson(json["EUR"]),
+        usd: json["USD"] == null ? null : Currency.fromJson(json["USD"]),
+        gbp: json["GBP"] == null ? null : Currency.fromJson(json["GBP"]),
+        eur: json["EUR"] == null ? null : Currency.fromJson(json["EUR"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -80,16 +79,23 @@ class Bpi {
         gbp: gbp?.toEntity(),
         eur: eur?.toEntity(),
       );
+
+  @override
+  List<Object?> get props => [
+        usd,
+        gbp,
+        eur,
+      ];
 }
 
-class Eur {
+class Currency extends Equatable {
   final String? code;
   final String? symbol;
   final String? rate;
   final String? description;
   final double? rateFloat;
 
-  Eur({
+  Currency({
     this.code,
     this.symbol,
     this.rate,
@@ -97,7 +103,7 @@ class Eur {
     this.rateFloat,
   });
 
-  factory Eur.fromJson(Map<String, dynamic> json) => Eur(
+  factory Currency.fromJson(Map<String, dynamic> json) => Currency(
         code: json["code"],
         symbol: json["symbol"],
         rate: json["rate"],
@@ -113,24 +119,24 @@ class Eur {
         "rate_float": rateFloat,
       };
 
-  EurEntity toEntity() => EurEntity(
+  CurrencyEntity toEntity() => CurrencyEntity(
       code: code,
       symbol: symbol,
       rate: rate,
       description: description,
       rateFloat: rateFloat);
 
-// @override
-// List<Object?> get props => [
-//   code,
-//   symbol,
-//   rate,
-//   description,
-//   rateFloat,
-// ];
+  @override
+  List<Object?> get props => [
+        code,
+        symbol,
+        rate,
+        description,
+        rateFloat,
+      ];
 }
 
-class Time {
+class Time extends Equatable {
   final String? updated;
   final DateTime? updatedIso;
   final String? updateduk;
@@ -157,4 +163,7 @@ class Time {
 
   TimeEntity toEntity() => TimeEntity(
       updated: updated, updatedIso: updatedIso, updateduk: updateduk);
+
+  @override
+  List<Object?> get props => [updated, updatedIso, updateduk];
 }

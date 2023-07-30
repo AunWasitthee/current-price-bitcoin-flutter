@@ -4,11 +4,13 @@
 
 import 'dart:convert';
 
+import 'package:equatable/equatable.dart';
+
 CurrentPriceEntity currentPriceEntityFromJson(String str) => CurrentPriceEntity.fromJson(json.decode(str));
 
 String currentPriceEntityToJson(CurrentPriceEntity data) => json.encode(data.toJson());
 
-class CurrentPriceEntity {
+class CurrentPriceEntity extends Equatable{
   final TimeEntity? time;
   final String? disclaimer;
   final String? chartName;
@@ -34,12 +36,14 @@ class CurrentPriceEntity {
     "chartName": chartName,
     "bpi": bpi?.toJson(),
   };
+  @override
+  List<Object?> get props => [time, disclaimer, chartName, bpi];
 }
 
-class BpiEntity {
-  final EurEntity? usd;
-  final EurEntity? gbp;
-  final EurEntity? eur;
+class BpiEntity extends Equatable{
+  final CurrencyEntity? usd;
+  final CurrencyEntity? gbp;
+  final CurrencyEntity? eur;
 
   BpiEntity({
     this.usd,
@@ -48,9 +52,9 @@ class BpiEntity {
   });
 
   factory BpiEntity.fromJson(Map<String, dynamic> json) => BpiEntity(
-    usd: json["USD"] == null ? null : EurEntity.fromJson(json["USD"]),
-    gbp: json["GBP"] == null ? null : EurEntity.fromJson(json["GBP"]),
-    eur: json["EUR"] == null ? null : EurEntity.fromJson(json["EUR"]),
+    usd: json["USD"] == null ? null : CurrencyEntity.fromJson(json["USD"]),
+    gbp: json["GBP"] == null ? null : CurrencyEntity.fromJson(json["GBP"]),
+    eur: json["EUR"] == null ? null : CurrencyEntity.fromJson(json["EUR"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -58,16 +62,23 @@ class BpiEntity {
     "GBP": gbp?.toJson(),
     "EUR": eur?.toJson(),
   };
+
+  @override
+  List<Object?> get props => [
+    usd,
+    gbp,
+    eur,
+  ];
 }
 
-class EurEntity {
+class CurrencyEntity extends Equatable{
   final String? code;
   final String? symbol;
   final String? rate;
   final String? description;
   final double? rateFloat;
 
-  EurEntity({
+  CurrencyEntity({
     this.code,
     this.symbol,
     this.rate,
@@ -75,7 +86,7 @@ class EurEntity {
     this.rateFloat,
   });
 
-  factory EurEntity.fromJson(Map<String, dynamic> json) => EurEntity(
+  factory CurrencyEntity.fromJson(Map<String, dynamic> json) => CurrencyEntity(
     code: json["code"],
     symbol: json["symbol"],
     rate: json["rate"],
@@ -90,9 +101,18 @@ class EurEntity {
     "description": description,
     "rate_float": rateFloat,
   };
+
+  @override
+  List<Object?> get props => [
+    code,
+    symbol,
+    rate,
+    description,
+    rateFloat,
+  ];
 }
 
-class TimeEntity {
+class TimeEntity extends Equatable{
   final String? updated;
   final DateTime? updatedIso;
   final String? updateduk;
@@ -114,4 +134,6 @@ class TimeEntity {
     "updatedISO": updatedIso?.toIso8601String(),
     "updateduk": updateduk,
   };
+  @override
+  List<Object?> get props => [updated, updatedIso, updateduk];
 }
