@@ -20,12 +20,12 @@ void main() {
     dataSource = RemoteDataSourceImpl(client: mockHttpClient);
   });
 
-  group('get current weather', () {
+  group('get current price', () {
     final tCurrentPriceModel = CurrentPriceModel.fromJson(
         json.decode(readJson('helpers/dummy_data/dummy_response.json')));
 
     test(
-      'should return weather model when the response code is 200',
+      'should return current price model when the response code is 200',
       () async {
         // arrange
         when(

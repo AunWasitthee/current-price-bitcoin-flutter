@@ -80,7 +80,7 @@ void main() {
 
   group('get current price', () {
     test(
-      'should return current weather when a call to data source is successful',
+      'should return current price when a call to data source is successful',
       () async {
         // arrange
         when(mockRemoteDataSource.getCurrentPrice())

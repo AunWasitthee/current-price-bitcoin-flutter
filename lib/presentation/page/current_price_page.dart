@@ -105,6 +105,7 @@ class _CurrentPricePageState extends State<CurrentPricePage> {
                               ],
                             ),
                             Row(
+                              key: Key('current_price_data'),
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 Text('${state.result.bpi?.eur?.code}',
@@ -305,6 +306,7 @@ class TabWidget extends StatefulWidget {
 
 class _TabWidgetState extends State<TabWidget> {
   var _selectedIndex = 0;
+  List<CurrentPriceEntity> data = [];
 
   void _tabChanged(int index) {
     setState(() {
@@ -367,7 +369,7 @@ class _TabWidgetState extends State<TabWidget> {
   }
 
   _historyWidget() {
-    var data = context.watch<CurrentPriceBloc>().currentPriceList;
+    data = context.watch<CurrentPriceBloc>().currentPriceList ?? [];
     // print("data length ${data.length}");
     return Column(
       children: [

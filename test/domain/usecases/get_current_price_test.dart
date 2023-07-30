@@ -7,12 +7,12 @@ import 'package:mockito/mockito.dart';
 import '../../helpers/test_helper.mocks.dart';
 
 void main() {
-  late MockApiRepository mockWeatherRepository;
+  late MockApiRepository mockApiRepository;
   late GetCurrentPrice usecase;
 
   setUp(() {
-    mockWeatherRepository = MockApiRepository();
-    usecase = GetCurrentPrice(mockWeatherRepository);
+    mockApiRepository = MockApiRepository();
+    usecase = GetCurrentPrice(mockApiRepository);
   });
 
   var tCurrentPriceEntity = CurrentPriceEntity(
@@ -47,7 +47,7 @@ void main() {
     'should get current price detail from the repository',
     () async {
       // arrange
-      when(mockWeatherRepository.getCurrentPrice())
+      when(mockApiRepository.getCurrentPrice())
           .thenAnswer((_) async => Right(tCurrentPriceEntity));
 
       // act
