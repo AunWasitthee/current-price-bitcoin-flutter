@@ -22,7 +22,7 @@ class CurrentPriceBloc extends Bloc<CurrentPriceEvent, CurrentPriceState> {
         emit(CurrentPriceLoading());
         if (_periodicSubscription == null) {
           _periodicSubscription ??=
-              Stream.periodic(const Duration(seconds: 10), (x) => x).startWith(
+              Stream.periodic(const Duration(minutes: 1), (x) => x).startWith(
                   0).listen(
                           (_) => add(const OnFetchData()),
                       onError: (error) => print("Do something with $error"));
